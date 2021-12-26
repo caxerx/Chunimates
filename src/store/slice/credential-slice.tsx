@@ -1,5 +1,5 @@
-import {createAction, createSlice} from '@reduxjs/toolkit';
-import {AimeCookie, ChunithmNetCookie} from '../../types/cookies';
+import { createAction, createSlice } from '@reduxjs/toolkit';
+import { AimeCookie, ChunithmNetCookie } from '../../types/cookies';
 
 interface CredentialState {
   aime?: AimeCookie;
@@ -8,17 +8,17 @@ interface CredentialState {
 const initialState = {} as CredentialState;
 
 export const setAimeCredential = createAction<AimeCookie>(
-  'credential/setAimeCredential',
+  'credential/setAimeCredential'
 );
 export const setChunithmNetCredential = createAction<ChunithmNetCookie>(
-  'credential/setChunithmNetCredential ',
+  'credential/setChunithmNetCredential '
 );
 
 const credentialSlice = createSlice({
   name: 'credential',
   initialState,
   reducers: {},
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder.addCase(setAimeCredential, (state, action) => {
       state.aime = action.payload;
     });

@@ -3,5 +3,5 @@ export async function fetchPlayRecord(token: string, userId: string) {
     headers: {
       Cookie: `_t=${token}; userId=${userId}`,
     },
-  }).then(t => t.text());
+  }).then((t) => t.text());
 }

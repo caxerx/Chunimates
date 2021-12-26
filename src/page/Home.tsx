@@ -1,7 +1,7 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
-import {Button, Text} from 'react-native-paper';
-import {useNavigate} from 'react-router-native';
+import { SafeAreaView } from 'react-native';
+import { Button, Text } from 'react-native-paper';
+import { useNavigate } from 'react-router-native';
 import tw from 'twrnc';
 
 const Home = () => {
@@ -12,20 +12,20 @@ const Home = () => {
         onPress={() => {
           navigate('/login');
         }}>
-        <Text>Login</Text>
+        <Text>LOGIN</Text>
       </Button>
 
       <Button
         onPress={() => {
           navigate('/recent-play');
         }}>
-        <Text>Recent Play</Text>
+        <Text>RECENT_PLAY</Text>
       </Button>
       <Button
         onPress={() => {
           navigate('/debug');
         }}>
-        <Text>Debug</Text>
+        <Text>DEBUG</Text>
       </Button>
     </SafeAreaView>
   );

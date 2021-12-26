@@ -1,8 +1,5 @@
-// import {DOMParser} from '@xmldom/xmldom';
-
-import {Parser} from 'htmlparser2';
-import {DomHandler} from 'htmlparser2';
 import * as cheerio from 'cheerio';
+import { DomHandler, Parser } from 'htmlparser2';
 
 export function parsePlayRecord(content: string): ChunithmPlayRecord[] {
   const handler = new DomHandler(undefined, undefined);
@@ -22,7 +19,7 @@ export function parsePlayRecord(content: string): ChunithmPlayRecord[] {
         .attr('src')
         ?.replace(
           /https:\/\/chunithm-net-eng.com\/mobile\/images\/icon_text_(.+).png/,
-          '$1',
+          '$1'
         ),
     } as ChunithmPlayRecord;
   });

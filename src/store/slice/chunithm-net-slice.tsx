@@ -1,15 +1,15 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface ChunithmNetState {
   recentPlayRecord: any[];
 }
-const initialState = {recentPlayRecord: []} as ChunithmNetState;
+const initialState = { recentPlayRecord: [] } as ChunithmNetState;
 
 const chunithmNetSlice = createSlice({
   name: 'chunithmNet',
   initialState,
   reducers: {},
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     //
   },
 });

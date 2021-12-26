@@ -1,24 +1,14 @@
 import React from 'react';
-import {Provider as StoreProvider} from 'react-redux';
-
-import tw from 'twrnc';
-
-import {
-  Image,
-  ImageBackground,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  useColorScheme,
-} from 'react-native';
-import {Provider as PaperProvider} from 'react-native-paper';
-import store from './store';
-import {NativeRouter, Route, Routes} from 'react-router-native';
-
+import { StyleSheet } from 'react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as StoreProvider } from 'react-redux';
+import { NativeRouter, Route, Routes } from 'react-router-native';
+import GlobalSnackBar from './component/home/global-snack-bar';
+import Debug from './page/Debug';
 import Home from './page/Home';
 import Login from './page/Login';
-import Debug from './page/Debug';
 import RecentPlay from './page/RecentPlay';
+import store from './store';
 
 const styles = StyleSheet.create({
   reborn: {
@@ -87,6 +77,7 @@ const App = () => {
             <Route path="/debug" element={<Debug />} />
           </Routes>
         </NativeRouter>
+        <GlobalSnackBar />
       </PaperProvider>
     </StoreProvider>
   );
