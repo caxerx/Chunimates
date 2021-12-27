@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-native';
 import tw from 'twrnc';
 import { fetchSongData } from '../api/chunirec';
 import { fetchSongRecord } from '../api/chunithm-net-api';
@@ -11,6 +12,8 @@ import { parseSongRecord } from '../parser/chunithm-net-parser';
 import { calculateRating } from '../utils/rating';
 
 const SongRecord = () => {
+  const navigate = useNavigate();
+
   const query = useQuery('chunirec-song-data', fetchSongData);
   const [netSongRecord, setNetSongRecord] = useState<{
     BAS: ChunithmNetSongRecord[];
@@ -77,6 +80,12 @@ const SongRecord = () => {
             setNetSongRecord({ MAS, EXP, ADV, BAS, ULT: [] });
           }}>
           <Text>Fetch Records</Text>
+        </Button>
+        <Button
+          onPress={() => {
+            navigate('/');
+          }}>
+          <Text>Back</Text>
         </Button>
       </View>
 
