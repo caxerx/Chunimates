@@ -1,20 +1,21 @@
 import CookieManager from '@react-native-cookies/cookies';
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, View } from 'react-native';
+import { FlatList, SafeAreaView, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import tw from 'twrnc';
 import { fetchPlayRecord } from '../api/chunithm-net-api';
-import RecentPlayTable from '../component/recent-play/recent-play-table';
+import RecentPlayRecordCard from '../component/recent-play/recent-play-record-card';
 import { parsePlayRecord } from '../parser/chunithm-net-parser';
 import { RootState } from '../store/index';
 
 async function fetchRecentData(_t: string, userId: string) {
   await CookieManager.clearAll();
-  return parsePlayRecord(await fetchPlayRecord(_t, userId));
+  return parsePlayRecord(await fetchPlayRecord());
 }
+
 const RecentPlay = () => {
-  const [recentData, setRecentData] = useState<ChunithmPlayRecord[]>([]);
+  const [recentData, setRecentData] = useState<ChunithmNetPlayRecord[]>([]);
   const credential = useSelector(
     (store: RootState) => store.credential.chunithmNet
   );
@@ -37,7 +38,7 @@ const RecentPlay = () => {
           <Text>Fetch</Text>
         </Button>
 
-        <Button
+        {/* <Button
           onPress={() => {
             import('../data/play-record.json')
               .then((data) => {
@@ -46,18 +47,18 @@ const RecentPlay = () => {
               .catch((e) => console.error(e));
           }}>
           <Text>Use Sample Data</Text>
-        </Button>
+        </Button> */}
       </View>
-
-      <ScrollView>
-        {/* <ScrollView horizontal={true} directionalLockEnabled={false}>
-          <View style={tw`w-[500px]`}> */}
-        <RecentPlayTable playRecord={recentData} />
-        {/* </View>
-        </ScrollView> */}
-      </ScrollView>
-
-      {/* <RecentPlayRecordCard /> */}
+      <FlatList
+        data={recentData}
+        renderItem={(record) => (
+          <>
+            <View style={tw`p-2 flex-col`}>
+              <RecentPlayRecordCard record={record.item} />
+            </View>
+          </>
+        )}
+      />
     </SafeAreaView>
   );
 };

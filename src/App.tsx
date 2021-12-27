@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
+import { QueryClientProvider } from 'react-query';
 import { Provider as StoreProvider } from 'react-redux';
 import { NativeRouter, Route, Routes } from 'react-router-native';
 import GlobalSnackBar from './component/home/global-snack-bar';
@@ -8,18 +8,20 @@ import Debug from './page/Debug';
 import Home from './page/Home';
 import Login from './page/Login';
 import RecentPlay from './page/RecentPlay';
+import SongRecord from './page/SongRecord';
 import store from './store';
+import queryClient from './store/query-client';
 
-const styles = StyleSheet.create({
-  reborn: {
-    height: 24,
-    width: 25,
-  },
-  iconImage: {
-    height: 86,
-    width: 86,
-  },
-});
+// const styles = StyleSheet.create({
+//   reborn: {
+//     height: 24,
+//     width: 25,
+//   },
+//   iconImage: {
+//     height: 86,
+//     width: 86,
+//   },
+// });
 
 // const HomeScreen = () => (
 //   <SafeAreaView style={tw`flex-col flex-1`}>
@@ -68,17 +70,20 @@ const styles = StyleSheet.create({
 const App = () => {
   return (
     <StoreProvider store={store}>
-      <PaperProvider>
-        <NativeRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/recent-play" element={<RecentPlay />} />
-            <Route path="/debug" element={<Debug />} />
-          </Routes>
-        </NativeRouter>
-        <GlobalSnackBar />
-      </PaperProvider>
+      <QueryClientProvider client={queryClient}>
+        <PaperProvider>
+          <NativeRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/recent-play" element={<RecentPlay />} />
+              <Route path="/song-record" element={<SongRecord />} />
+              <Route path="/debug" element={<Debug />} />
+            </Routes>
+          </NativeRouter>
+          <GlobalSnackBar />
+        </PaperProvider>
+      </QueryClientProvider>
     </StoreProvider>
   );
 };

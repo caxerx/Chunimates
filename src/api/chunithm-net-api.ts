@@ -1,7 +1,27 @@
-export async function fetchPlayRecord(token: string, userId: string) {
-  return await fetch('https://chunithm-net-eng.com/mobile/record/playlog/', {
-    headers: {
-      Cookie: `_t=${token}; userId=${userId}`,
-    },
-  }).then((t) => t.text());
+import { fetchSongRecordDifficultyMapping } from '../const/level-string';
+import store from '../store';
+import request from './request';
+
+export async function fetchPlayRecord() {
+  return (
+    await request.get<string>(
+      'https://chunithm-net-eng.com/mobile/record/playlog/'
+    )
+  ).data;
+}
+
+export async function fetchSongRecord(difficulty: ChunithmDifficulty) {
+  const body = new URLSearchParams();
+  body.append(
+    'token',
+    store.getState().credential.chunithmNet?._t?.value ?? ''
+  );
+  body.append('genre', '99');
+
+  return (
+    await request.post<string>(
+      `https://chunithm-net-eng.com/mobile/record/musicGenre/send${fetchSongRecordDifficultyMapping[difficulty]}`,
+      body.toString()
+    )
+  ).data;
 }

@@ -1,14 +1,17 @@
 import React from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { FlatList, SafeAreaView, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
+import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-native';
 import tw from 'twrnc';
+import { fetchSongData } from '../api/chunirec';
 import { RootState } from '../store/index';
 
 const Debug = () => {
   const navigate = useNavigate();
   const credential = useSelector((store: RootState) => store.credential);
+  const query = useQuery('chunirec-song-data', fetchSongData);
 
   return (
     <SafeAreaView style={tw`flex-1`}>
@@ -27,6 +30,12 @@ const Debug = () => {
         <Text style={tw`mb-4`}>AimeRaw: {JSON.stringify(credential.aime)}</Text>
         <Text>ChunithmNetRaw: {JSON.stringify(credential.chunithmNet)}</Text>
       </View>
+      <FlatList
+        style={tw`flex-1`}
+        data={query.data}
+        renderItem={(i) => <Text>{JSON.stringify(i)}</Text>}
+        keyExtractor={(item) => item.meta.id}
+      />
     </SafeAreaView>
   );
 };

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface ChunithmNetState {
-  recentPlayRecord: any[];
+  recentPlayRecord: ChunithmNetPlayRecord[];
 }
 const initialState = { recentPlayRecord: [] } as ChunithmNetState;
 
@@ -9,7 +9,7 @@ const chunithmNetSlice = createSlice({
   name: 'chunithmNet',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: (_builder) => {
     //
   },
 });

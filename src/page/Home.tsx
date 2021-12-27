@@ -21,6 +21,14 @@ const Home = () => {
         }}>
         <Text>RECENT_PLAY</Text>
       </Button>
+
+      <Button
+        onPress={() => {
+          navigate('/song-record');
+        }}>
+        <Text>SONG_RECORD</Text>
+      </Button>
+
       <Button
         onPress={() => {
           navigate('/debug');
