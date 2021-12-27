@@ -1,90 +1,84 @@
+import {
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+  NavigationContainer,
+} from '@react-navigation/native';
+import merge from 'deepmerge';
 import React from 'react';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { I18nextProvider, useTranslation } from 'react-i18next';
+import { useColorScheme } from 'react-native';
+import {
+  DarkTheme as PaperDarkTheme,
+  DefaultTheme as PaperDefaultTheme,
+  Provider as PaperProvider,
+} from 'react-native-paper';
 import { QueryClientProvider } from 'react-query';
 import { Provider as StoreProvider } from 'react-redux';
-import { NativeRouter, Route, Routes } from 'react-router-native';
 import GlobalSnackBar from './component/home/global-snack-bar';
 import Debug from './page/Debug';
 import Home from './page/Home';
 import Login from './page/Login';
 import RecentPlay from './page/RecentPlay';
 import SongRecord from './page/SongRecord';
+import i18n from './service/i18n';
+import Stack from './service/navigator-stack';
 import store from './store';
 import queryClient from './store/query-client';
 
-// const styles = StyleSheet.create({
-//   reborn: {
-//     height: 24,
-//     width: 25,
-//   },
-//   iconImage: {
-//     height: 86,
-//     width: 86,
-//   },
-// });
+const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
+const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 
-// const HomeScreen = () => (
-//   <SafeAreaView style={tw`flex-col flex-1`}>
-//     <Layout level="4" style={tw`flex-1`}>
-//       <ScrollView>
-//         <Card appearance="filled" style={tw`m-4`}>
-//           <Layout style={tw`flex-row`}>
-//             <Image
-//               style={styles.iconImage}
-//               source={{
-//                 uri: 'https://chunithm-net-eng.com/mobile/img/463558b989d8c93f.png',
-//               }}
-//             />
-//             <Layout style={tw`flex-col flex-1 ml-4`}>
-//               <ImageBackground
-//                 style={tw`w-full h-5`}
-//                 source={{
-//                   uri: 'https://chunithm-net-eng.com/mobile/images/honor_bg_normal.png',
-//                 }}>
-//                 <Text style={tw`text-center text-black`}>NEW COMER</Text>
-//               </ImageBackground>
-//               <Layout style={tw`flex-col`}>
-//                 <ImageBackground
-//                   style={{...styles.reborn, ...tw`items-center justify-center`}}
-//                   source={{
-//                     uri: 'https://chunithm-net-eng.com/mobile/images/icon_reborn_star.png',
-//                   }}>
-//                   <Text style={tw`text-black`}>1</Text>
-//                 </ImageBackground>
-//               </Layout>
-//               <Layout style={tw`flex-row`}>
-//                 <Text style={tw`mr-4`}>Lv.17</Text>
-//                 <Text>ＣＨＯＣＯＩＦＹ</Text>
-//               </Layout>
-//               <Layout style={tw`flex-row`}>
-//                 <Text>RATING : 14.46 / (MAX 14.46)</Text>
-//               </Layout>
-//             </Layout>
-//           </Layout>
-//         </Card>
-//       </ScrollView>
-//     </Layout>
-//   </SafeAreaView>
-// );
+const NavigationRoutes = () => {
+  const { t } = useTranslation();
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Home"
+        options={{ title: 'Chunimates', headerShown: false }}
+        component={Home}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{ title: t('SCREEN_TITLE.LOGIN') }}
+      />
+      <Stack.Screen
+        name="RecentPlay"
+        component={RecentPlay}
+        options={{ title: t('SCREEN_TITLE.RECENT_PLAY') }}
+      />
+      <Stack.Screen
+        name="SongRecord"
+        component={SongRecord}
+        options={{ title: t('SCREEN_TITLE.SONG_RECORD') }}
+      />
+      <Stack.Screen
+        name="Debug"
+        component={Debug}
+        options={{ title: t('SCREEN_TITLE.DEBUG') }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const App = () => {
+  const colorSchema = useColorScheme();
+  const theme =
+    colorSchema === 'dark' ? CombinedDarkTheme : CombinedDefaultTheme;
+
   return (
-    <StoreProvider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <PaperProvider>
-          <NativeRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/recent-play" element={<RecentPlay />} />
-              <Route path="/song-record" element={<SongRecord />} />
-              <Route path="/debug" element={<Debug />} />
-            </Routes>
-          </NativeRouter>
-          <GlobalSnackBar />
-        </PaperProvider>
-      </QueryClientProvider>
-    </StoreProvider>
+    <NavigationContainer theme={theme}>
+      <StoreProvider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <I18nextProvider i18n={i18n}>
+            <PaperProvider theme={theme}>
+              <NavigationRoutes />
+              <GlobalSnackBar />
+            </PaperProvider>
+          </I18nextProvider>
+        </QueryClientProvider>
+      </StoreProvider>
+    </NavigationContainer>
   );
 };
 

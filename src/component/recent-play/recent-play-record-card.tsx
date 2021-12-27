@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { t } from 'i18next';
 import React from 'react';
 import { Image, View } from 'react-native';
 import { Caption, Card, Subheading, Text, Title } from 'react-native-paper';
@@ -46,7 +47,9 @@ const RecentPlayRecordCard = ({ record }: RecentPlayRecordCardProps) => {
 
         <View style={tw`flex-col flex-1 ml-2`}>
           <View style={tw`flex-row items-center`}>
-            <Title style={tw`flex-1`}>Track {record.track}</Title>
+            <Title style={tw`flex-1`}>
+              {t('PLAY_RECORD_CARD.TRACK_N', [record.track])}
+            </Title>
             <DifficultyBadge
               difficulty={record.difficulty}
               constant={song.data[record.difficulty].const}

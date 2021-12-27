@@ -1,27 +1,21 @@
 import React from 'react';
-import { FlatList, SafeAreaView, View } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+import { FlatList, SafeAreaView, ScrollView } from 'react-native';
+import { Text } from 'react-native-paper';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-native';
 import tw from 'twrnc';
 import { fetchSongData } from '../api/chunirec';
 import { RootState } from '../store/index';
 
 const Debug = () => {
-  const navigate = useNavigate();
   const credential = useSelector((store: RootState) => store.credential);
   const query = useQuery('chunirec-song-data', fetchSongData);
+  const { i18n } = useTranslation();
 
   return (
     <SafeAreaView style={tw`flex-1`}>
-      <View style={tw`flex-1`}>
-        <Button
-          onPress={() => {
-            navigate('/');
-          }}>
-          <Text>Back to home</Text>
-        </Button>
+      <ScrollView style={tw`flex-1`}>
         <Text>Aime JSESSIONID: {credential.aime?.JSESSIONID?.value}</Text>
         <Text>ChunithmNet _t: {credential.chunithmNet?._t?.value}</Text>
         <Text style={tw`mb-4`}>
@@ -29,7 +23,9 @@ const Debug = () => {
         </Text>
         <Text style={tw`mb-4`}>AimeRaw: {JSON.stringify(credential.aime)}</Text>
         <Text>ChunithmNetRaw: {JSON.stringify(credential.chunithmNet)}</Text>
-      </View>
+        <Text>Language: {i18n.language}</Text>
+      </ScrollView>
+
       <FlatList
         style={tw`flex-1`}
         data={query.data}

@@ -1,0 +1,27 @@
+{
+  "BUTTON": {
+    "FETCH_DATA": "Fetch Data",
+    "BACK": "Back"
+  },
+  "SNACK_BAR": {
+    "UNABLE_TO_LOAD_AIME_CREDENTIAL": "Unable to load Aime-Net credential.",
+    "UNABLE_TO_LOAD_CHUNITHM_NET_CREDENTIAL": "Unable to load Chunithm-Net credential.",
+    "UNABLE_TO_LOAD_RECORDS": "Unable to load records."
+  },
+  "PLAY_RECORD_CARD": {
+    "TRACK_N": "Track {0}"
+  },
+  "SONG_RECORD_TABLE": {
+    "SONG_TITLE": "Title",
+    "DIFFICULTY": "Diff",
+    "CONSTANT": "Const",
+    "SCORE": "Score",
+    "RATING": "Rating"
+  },
+  "SCREEN_TITLE": {
+    "RECENT_PLAY": "Recent Play",
+    "LOGIN": "Login",
+    "SONG_RECORD": "Song Record",
+    "DEBUG": "Debug"
+  }
+}

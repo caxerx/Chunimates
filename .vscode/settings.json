@@ -2,6 +2,8 @@
     "eslint.format.enable": true,
     "cSpell.words": [
         "Aime",
+        "bignumber",
+        "Chunimates",
         "Chunirec",
         "Chunithm",
         "highscore",
@@ -10,5 +12,27 @@
         "reduxjs",
         "twrnc",
         "Zoomable"
-    ]
+    ],
+    "i18n-ally.localesPaths": [
+        "locales",
+        "ios/Pods/Flipper-Folly/folly/lang",
+        "ios/Pods/Flipper-Boost-iOSX/boost/locale",
+        "ios/Pods/RCT-Folly/folly/lang",
+        "ios/Pods/boost/boost/locale",
+        "macos/Pods/Flipper-Folly/folly/lang",
+        "macos/Pods/RCT-Folly/folly/lang",
+        "macos/Pods/boost-for-react-native/boost/locale",
+        "ios/Pods/Flipper-Boost-iOSX/boost/predef/language",
+        "ios/Pods/boost/boost/predef/language",
+        "macos/Pods/boost-for-react-native/boost/predef/language",
+        "ios/Pods/Headers/Public/Flipper-Folly/folly/lang",
+        "ios/Pods/Headers/Public/RCT-Folly/folly/lang",
+        "ios/Pods/Headers/Private/Flipper-Folly/folly/lang",
+        "ios/Pods/Headers/Private/RCT-Folly/folly/lang",
+        "macos/Pods/Headers/Public/Flipper-Folly/folly/lang",
+        "macos/Pods/Headers/Public/RCT-Folly/folly/lang",
+        "macos/Pods/Headers/Private/Flipper-Folly/folly/lang",
+        "macos/Pods/Headers/Private/RCT-Folly/folly/lang"
+    ],
+    "i18n-ally.keystyle": "nested"
 }

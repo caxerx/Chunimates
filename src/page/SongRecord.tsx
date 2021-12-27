@@ -1,20 +1,25 @@
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SafeAreaView, ScrollView, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-native';
+import { useDispatch } from 'react-redux';
 import tw from 'twrnc';
 import { fetchSongData } from '../api/chunirec';
 import { fetchSongRecord } from '../api/chunithm-net-api';
 import SongRecordTable from '../component/song-record/song-record-table';
 import { parseSongRecord } from '../parser/chunithm-net-parser';
+import log from '../service/log';
+import { showSnackBar } from '../store/slice/ui-slice';
 import { calculateRating } from '../utils/rating';
 
 const SongRecord = () => {
-  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const query = useQuery('chunirec-song-data', fetchSongData);
+
   const [netSongRecord, setNetSongRecord] = useState<{
     BAS: ChunithmNetSongRecord[];
     ADV: ChunithmNetSongRecord[];
@@ -61,31 +66,30 @@ const SongRecord = () => {
       <View style={tw`flex-row`}>
         <Button
           onPress={async () => {
-            const MAS = await fetchSongRecord('MAS').then((i) =>
-              parseSongRecord(i)
-            );
+            try {
+              const MAS = await fetchSongRecord('MAS').then((i) =>
+                parseSongRecord(i)
+              );
 
-            const EXP = await fetchSongRecord('EXP').then((i) =>
-              parseSongRecord(i)
-            );
+              const EXP = await fetchSongRecord('EXP').then((i) =>
+                parseSongRecord(i)
+              );
 
-            const ADV = await fetchSongRecord('ADV').then((i) =>
-              parseSongRecord(i)
-            );
+              const ADV = await fetchSongRecord('ADV').then((i) =>
+                parseSongRecord(i)
+              );
 
-            const BAS = await fetchSongRecord('BAS').then((i) =>
-              parseSongRecord(i)
-            );
+              const BAS = await fetchSongRecord('BAS').then((i) =>
+                parseSongRecord(i)
+              );
 
-            setNetSongRecord({ MAS, EXP, ADV, BAS, ULT: [] });
+              setNetSongRecord({ MAS, EXP, ADV, BAS, ULT: [] });
+            } catch (e) {
+              dispatch(showSnackBar(t('SNACK_BAR.UNABLE_TO_LOAD_RECORDS')));
+              log.error(e);
+            }
           }}>
-          <Text>Fetch Records</Text>
-        </Button>
-        <Button
-          onPress={() => {
-            navigate('/');
-          }}>
-          <Text>Back</Text>
+          <Text>{t('BUTTON.FETCH_DATA')}</Text>
         </Button>
       </View>
 

@@ -24,4 +24,8 @@ request.interceptors.request.use(async (req) => {
   return req;
 });
 
+request.interceptors.response.use((resp) => {
+  return resp;
+});
+
 export default request;

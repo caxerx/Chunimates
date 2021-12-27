@@ -1,39 +1,58 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native';
 import { Button, Text } from 'react-native-paper';
-import { useNavigate } from 'react-router-native';
 import tw from 'twrnc';
+import ProfileCard from '../component/home/profile-card';
+import { ChunimatesParamList } from '../service/navigator-stack';
 
 const Home = () => {
-  const navigate = useNavigate();
+  const navigation = useNavigation<NavigationProp<ChunimatesParamList>>();
+
+  const { t } = useTranslation();
+
   return (
     <SafeAreaView style={tw`flex-1`}>
+      <ProfileCard
+        profileCard={{
+          name: 'CHOCOIFY',
+          reborn: '1',
+          avatar: '463558b989d8c93f',
+          level: '20',
+          rating: '14.43',
+          maxRating: '14.46',
+          title: 'NEW COMER',
+          titleType: 'normal',
+        }}
+      />
+
       <Button
         onPress={() => {
-          navigate('/login');
+          navigation.navigate('Login');
         }}>
-        <Text>LOGIN</Text>
+        <Text>{t('SCREEN_TITLE.LOGIN')}</Text>
       </Button>
 
       <Button
         onPress={() => {
-          navigate('/recent-play');
+          navigation.navigate('RecentPlay');
         }}>
-        <Text>RECENT_PLAY</Text>
+        <Text>{t('SCREEN_TITLE.RECENT_PLAY')}</Text>
       </Button>
 
       <Button
         onPress={() => {
-          navigate('/song-record');
+          navigation.navigate('SongRecord');
         }}>
-        <Text>SONG_RECORD</Text>
+        <Text>{t('SCREEN_TITLE.SONG_RECORD')}</Text>
       </Button>
 
       <Button
         onPress={() => {
-          navigate('/debug');
+          navigation.navigate('Debug');
         }}>
-        <Text>DEBUG</Text>
+        <Text>{t('SCREEN_TITLE.DEBUG')}</Text>
       </Button>
     </SafeAreaView>
   );

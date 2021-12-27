@@ -1,10 +1,12 @@
 import CookieManager from '@react-native-cookies/cookies';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native';
 import WebView from 'react-native-webview';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-native';
 import tw from 'twrnc';
+import { ChunimatesParamList } from '../service/navigator-stack';
 import {
   setAimeCredential,
   setChunithmNetCredential,
@@ -33,7 +35,8 @@ async function getChunithmNetCredentials(): Promise<ChunithmNetCookie> {
 const Login = () => {
   const webView = useRef<WebView>(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigation = useNavigation<NavigationProp<ChunimatesParamList>>();
+  const { t } = useTranslation();
 
   return (
     <SafeAreaView style={tw`flex-1`}>
@@ -49,8 +52,10 @@ const Login = () => {
               const chunithmNetCookie = await getChunithmNetCredentials();
 
               if (!aimeCookie.JSESSIONID?.value) {
-                dispatch(showSnackBar('UNABLE_TO_LOAD_AIME_CREDENTIAL'));
-                navigate('/');
+                dispatch(
+                  showSnackBar(t('SNACK_BAR.UNABLE_TO_LOAD_AIME_CREDENTIAL'))
+                );
+                navigation.goBack();
                 return;
               }
 
@@ -59,16 +64,18 @@ const Login = () => {
                 !chunithmNetCookie.userId?.value
               ) {
                 dispatch(
-                  showSnackBar('UNABLE_TO_LOAD_CHUNITHM_NET_CREDENTIAL')
+                  showSnackBar(
+                    t('SNACK_BAR.UNABLE_TO_LOAD_CHUNITHM_NET_CREDENTIAL')
+                  )
                 );
-                navigate('/');
+                navigation.goBack();
                 return;
               }
 
               dispatch(setAimeCredential(aimeCookie));
               dispatch(setChunithmNetCredential(chunithmNetCookie));
 
-              navigate('/');
+              navigation.goBack();
             }
           }}
         />
