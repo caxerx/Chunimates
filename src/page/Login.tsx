@@ -1,17 +1,19 @@
 import CookieManager from '@react-native-cookies/cookies';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native';
 import WebView from 'react-native-webview';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import tw from 'twrnc';
 import { ChunimatesParamList } from '../service/navigator-stack';
+import { RootState } from '../store/index';
 import {
   setAimeCredential,
   setChunithmNetCredential,
 } from '../store/slice/credential-slice';
-import { showSnackBar } from '../store/slice/ui-slice';
+import { setInitDone, showSnackBar } from '../store/slice/ui-slice';
 import type { AimeCookie, ChunithmNetCookie } from '../types/cookies';
 
 async function getAimeCredentials(): Promise<AimeCookie> {
@@ -35,8 +37,19 @@ async function getChunithmNetCredentials(): Promise<ChunithmNetCookie> {
 const Login = () => {
   const webView = useRef<WebView>(null);
   const dispatch = useDispatch();
-  const navigation = useNavigation<NavigationProp<ChunimatesParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<ChunimatesParamList>>();
   const { t } = useTranslation();
+  const initDone = useSelector((store: RootState) => store.ui.initDone);
+
+  function proceed(success: boolean) {
+    if (!initDone) {
+      navigation.replace('Home');
+      dispatch(setInitDone());
+      return;
+    }
+    navigation.goBack();
+  }
 
   return (
     <SafeAreaView style={tw`flex-1`}>
@@ -55,7 +68,7 @@ const Login = () => {
                 dispatch(
                   showSnackBar(t('SNACK_BAR.UNABLE_TO_LOAD_AIME_CREDENTIAL'))
                 );
-                navigation.goBack();
+                proceed(false);
                 return;
               }
 
@@ -68,14 +81,14 @@ const Login = () => {
                     t('SNACK_BAR.UNABLE_TO_LOAD_CHUNITHM_NET_CREDENTIAL')
                   )
                 );
-                navigation.goBack();
+                proceed(false);
                 return;
               }
 
               dispatch(setAimeCredential(aimeCookie));
               dispatch(setChunithmNetCredential(chunithmNetCookie));
 
-              navigation.goBack();
+              proceed(true);
             }
           }}
         />

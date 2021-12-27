@@ -13,7 +13,7 @@ import {
   Provider as PaperProvider,
 } from 'react-native-paper';
 import { QueryClientProvider } from 'react-query';
-import { Provider as StoreProvider } from 'react-redux';
+import { Provider as StoreProvider, useSelector } from 'react-redux';
 import GlobalSnackBar from './component/home/global-snack-bar';
 import Debug from './page/Debug';
 import Home from './page/Home';
@@ -22,7 +22,7 @@ import RecentPlay from './page/RecentPlay';
 import SongRecord from './page/SongRecord';
 import i18n from './service/i18n';
 import Stack from './service/navigator-stack';
-import store from './store';
+import store, { RootState } from './store';
 import queryClient from './store/query-client';
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
@@ -30,8 +30,10 @@ const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 
 const NavigationRoutes = () => {
   const { t } = useTranslation();
+  const initDone = useSelector((state: RootState) => state.ui.initDone);
+
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName={'Login'}>
       <Stack.Screen
         name="Home"
         options={{ title: 'Chunimates', headerShown: false }}

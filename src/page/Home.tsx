@@ -3,8 +3,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native';
 import { Button, Text } from 'react-native-paper';
+import { useQuery } from 'react-query';
 import tw from 'twrnc';
 import ProfileCard from '../component/home/profile-card';
+import { fetchAndParseProfile } from '../query/chunithm-net';
 import { ChunimatesParamList } from '../service/navigator-stack';
 
 const Home = () => {
@@ -12,20 +14,11 @@ const Home = () => {
 
   const { t } = useTranslation();
 
+  const profileQuery = useQuery('chunithm-net-profile', fetchAndParseProfile);
+
   return (
     <SafeAreaView style={tw`flex-1`}>
-      <ProfileCard
-        profileCard={{
-          name: 'CHOCOIFY',
-          reborn: '1',
-          avatar: '463558b989d8c93f',
-          level: '20',
-          rating: '14.43',
-          maxRating: '14.46',
-          title: 'NEW COMER',
-          titleType: 'normal',
-        }}
-      />
+      {profileQuery.data && <ProfileCard profileCard={profileQuery.data} />}
 
       <Button
         onPress={() => {

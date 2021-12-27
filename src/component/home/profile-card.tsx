@@ -3,18 +3,11 @@ import { Image, ImageBackground, View } from 'react-native';
 import { Card, Text } from 'react-native-paper';
 import tw from 'twrnc';
 
-interface ProfileCardProps {
-  name: string;
-  level: string;
-  reborn: string;
-  rating: string;
-  maxRating: string;
-  title: string;
-  titleType: string;
-  avatar: string;
-}
-
-const ProfileCard = ({ profileCard }: { profileCard: ProfileCardProps }) => {
+const ProfileCard = ({
+  profileCard,
+}: {
+  profileCard: ChunithmNetProfileCard;
+}) => {
   return (
     <Card style={tw`m-4 p-2`}>
       <View style={tw`flex-row`}>
@@ -33,7 +26,7 @@ const ProfileCard = ({ profileCard }: { profileCard: ProfileCardProps }) => {
             }}>
             <Text style={tw`text-center text-black`}>{profileCard.title}</Text>
           </ImageBackground>
-          {profileCard.reborn && (
+          {!!profileCard.reborn && (
             <View style={tw`flex-col`}>
               <ImageBackground
                 style={tw`items-center justify-center h-[24px] w-[25px]`}

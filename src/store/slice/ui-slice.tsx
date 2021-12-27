@@ -1,12 +1,14 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
 
 interface UIState {
+  initDone: boolean;
   snackbar: {
     message?: string;
     isVisible: boolean;
   };
 }
 const initialState = {
+  initDone: false,
   snackbar: {
     isVisible: false,
   },
@@ -14,7 +16,9 @@ const initialState = {
 
 export const showSnackBar = createAction<string>('ui/showSnackBar');
 
-export const dismissSnackBar = createAction('ui/dismissSnackBar ');
+export const dismissSnackBar = createAction('ui/dismissSnackBar');
+
+export const setInitDone = createAction('ui/setInitDone');
 
 const uiSlice = createSlice({
   name: 'ui',
@@ -29,6 +33,10 @@ const uiSlice = createSlice({
     builder.addCase(dismissSnackBar, (state) => {
       state.snackbar.message = undefined;
       state.snackbar.isVisible = false;
+    });
+
+    builder.addCase(setInitDone, (state) => {
+      state.initDone = true;
     });
   },
 });

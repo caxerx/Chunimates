@@ -1,4 +1,4 @@
-import { fetchPlayRecordDifficultyMapping } from '../const/level-string';
+import { fetchPlayRecordDifficultyMapping } from '../constant/level-string';
 import { loadDom } from './load-dom';
 
 export function parsePlayRecord(content: string): ChunithmNetPlayRecord[] {
@@ -60,4 +60,52 @@ export function parseSongRecord(content: string): ChunithmNetSongRecord[] {
   });
 
   return t.toArray();
+}
+
+export function parseProfile(data: string) {
+  const $ = loadDom(data);
+
+  const boxPlayer = $('.box_player');
+
+  if (!boxPlayer) {
+    throw new Error('failed to find player profile card');
+  }
+
+  const ratingMatch =
+    boxPlayer
+      .find('.player_rating')
+      .text()
+      .replace(/[\t\n]/g, '')
+      .match(/RATING : (.+) \/ \(MAX (.+)\)/) ?? [];
+
+  const [, rating, maxRating] = ratingMatch;
+
+  return {
+    name: boxPlayer
+      .find('.player_name')
+      .clone()
+      .children()
+      .remove()
+      .end()
+      .text()
+      .replace(/[\t\n]/g, ''),
+    level: boxPlayer.find('.player_lv').text().replace('Lv.', ''),
+    reborn: boxPlayer.find('.player_reborn').text(),
+    rating: rating ?? '',
+    maxRating: maxRating ?? '',
+    title: boxPlayer.find('.player_honor_text span').text(),
+    titleType:
+      boxPlayer
+        .find('.player_honor')
+        .attr('style')
+        ?.match(
+          /background-image:url\(https:\/\/chunithm-net-eng.com\/mobile\/images\/honor_bg_(.+).png\)/
+        )?.[1] ?? '',
+    avatar:
+      boxPlayer
+        .find('.player_chara img')
+        .attr('src')
+        ?.match(/https:\/\/chunithm-net-eng.com\/mobile\/img\/(.+).png/)?.[1] ??
+      '',
+  } as ChunithmNetProfileCard;
 }

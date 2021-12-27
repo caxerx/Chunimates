@@ -1,6 +1,11 @@
-import { fetchSongRecordDifficultyMapping } from '../const/level-string';
+import { fetchSongRecordDifficultyMapping } from '../constant/level-string';
 import store from '../store';
 import request from './request';
+
+export async function fetchProfile() {
+  return (await request.get<string>('https://chunithm-net-eng.com/mobile/home'))
+    .data;
+}
 
 export async function fetchPlayRecord() {
   return (

@@ -1,5 +1,16 @@
 type ChunithmDifficulty = 'BAS' | 'ADV' | 'EXP' | 'MAS' | 'ULT';
 
+interface ChunithmNetProfileCard {
+  name: string;
+  level: string;
+  reborn: string;
+  rating: string;
+  maxRating: string;
+  title: string;
+  titleType: string;
+  avatar: string;
+}
+
 interface ChunithmNetPlayRecord {
   title: string;
   date: string;
