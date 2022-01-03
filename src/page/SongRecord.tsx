@@ -26,7 +26,8 @@ const SongRecord = () => {
     EXP: ChunithmNetSongRecord[];
     MAS: ChunithmNetSongRecord[];
     ULT: ChunithmNetSongRecord[];
-  }>({ BAS: [], ADV: [], EXP: [], MAS: [], ULT: [] });
+    WE: ChunithmNetSongRecord[];
+  }>({ BAS: [], ADV: [], EXP: [], MAS: [], ULT: [], WE: [] });
 
   const [tableSongRecord, setTableSongRecord] = useState<
     ChunithmRatingTableSongRecord[]
@@ -83,7 +84,7 @@ const SongRecord = () => {
                 parseSongRecord(i)
               );
 
-              setNetSongRecord({ MAS, EXP, ADV, BAS, ULT: [] });
+              setNetSongRecord({ MAS, EXP, ADV, BAS, ULT: [], WE: [] });
             } catch (e) {
               dispatch(showSnackBar(t('SNACK_BAR.UNABLE_TO_LOAD_RECORDS')));
               log.error(e);

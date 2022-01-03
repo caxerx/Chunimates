@@ -43,11 +43,12 @@ const Login = () => {
   const initDone = useSelector((store: RootState) => store.ui.initDone);
 
   function proceed(success: boolean) {
-    if (!initDone) {
+    if (!initDone || !navigation.canGoBack()) {
       navigation.replace('Home');
       dispatch(setInitDone());
       return;
     }
+
     navigation.goBack();
   }
 

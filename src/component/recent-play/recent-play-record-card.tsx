@@ -25,10 +25,14 @@ const RecentPlayRecordCard = ({ record }: RecentPlayRecordCardProps) => {
   if (!song) {
     return <></>;
   }
-  const rating = calculateRating(
-    new BigNumber(+record.score),
-    new BigNumber(song.data[record.difficulty].const)
-  ).toFixed(2);
+
+  const rating =
+    record.difficulty === 'WE'
+      ? ''
+      : calculateRating(
+          new BigNumber(+record.score),
+          new BigNumber(song.data[record.difficulty].const)
+        ).toFixed(2);
 
   return (
     <Card style={tw`p-2`}>
@@ -52,7 +56,7 @@ const RecentPlayRecordCard = ({ record }: RecentPlayRecordCardProps) => {
             </Title>
             <DifficultyBadge
               difficulty={record.difficulty}
-              constant={song.data[record.difficulty].const}
+              constant={song.data[record.difficulty]?.const}
             />
           </View>
 
@@ -60,11 +64,13 @@ const RecentPlayRecordCard = ({ record }: RecentPlayRecordCardProps) => {
           <View style={tw`flex-row items-center mb-2`}>
             <Caption style={tw`flex-1`}>{song.meta.genre}</Caption>
           </View>
-          <View style={tw`flex-row items-center`}>
-            <Text style={tw`flex-1`}>
-              {record.score} ({rating})
-            </Text>
-          </View>
+          {record.difficulty !== 'WE' && (
+            <View style={tw`flex-row items-center`}>
+              <Text style={tw`flex-1`}>
+                {record.score} ({rating})
+              </Text>
+            </View>
+          )}
         </View>
       </View>
     </Card>

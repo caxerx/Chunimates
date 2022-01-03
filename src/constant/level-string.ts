@@ -7,6 +7,7 @@ export const fetchSongRecordDifficultyMapping: Record<
   EXP: 'Expert',
   MAS: 'Master',
   ULT: 'Ultima',
+  WE: "World's End",
 };
 
 export const fetchPlayRecordDifficultyMapping: Record<
@@ -18,4 +19,5 @@ export const fetchPlayRecordDifficultyMapping: Record<
   expert: 'EXP',
   master: 'MAS',
   ultima: 'ULT',
+  worldsend: 'WE',
 };

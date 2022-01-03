@@ -4,7 +4,7 @@ import tw from 'twrnc';
 
 interface DifficultyBadgeProps {
   difficulty: ChunithmDifficulty;
-  constant: number;
+  constant?: number;
 }
 
 const BadgeStyleMapping: Record<ChunithmDifficulty, string> = {
@@ -13,13 +13,16 @@ const BadgeStyleMapping: Record<ChunithmDifficulty, string> = {
   EXP: 'bg-red-500',
   MAS: 'bg-purple-500',
   ULT: 'bg-red-900',
+  WE: 'bg-black',
 };
 
 const DifficultyBadge = ({ difficulty, constant }: DifficultyBadgeProps) => {
   return (
     <Badge
       size={24}
-      style={tw`font-bold self-center ${BadgeStyleMapping[difficulty]}`}>{`${difficulty} ${constant}`}</Badge>
+      style={tw`font-bold self-center ${BadgeStyleMapping[difficulty]}`}>{`${difficulty} ${
+      constant ?? ''
+    }`}</Badge>
   );
 };
 export default DifficultyBadge;

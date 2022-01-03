@@ -11,7 +11,7 @@ export const setAimeCredential = createAction<AimeCookie>(
   'credential/setAimeCredential'
 );
 export const setChunithmNetCredential = createAction<ChunithmNetCookie>(
-  'credential/setChunithmNetCredential '
+  'credential/setChunithmNetCredential'
 );
 
 const credentialSlice = createSlice({

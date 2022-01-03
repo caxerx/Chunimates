@@ -1,4 +1,4 @@
-type ChunithmDifficulty = 'BAS' | 'ADV' | 'EXP' | 'MAS' | 'ULT';
+type ChunithmDifficulty = 'BAS' | 'ADV' | 'EXP' | 'MAS' | 'ULT' | 'WE';
 
 interface ChunithmNetProfileCard {
   name: string;
